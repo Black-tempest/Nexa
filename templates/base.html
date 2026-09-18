@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nexa{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div id="app">
+        {% if session_user %}
+        <nav class="navbar">
+            <div class="nav-left">
+                <a href="/feed" class="nav-logo">
+                    <span class="logo-icon">💬</span>
+                    <span class="logo-text">Nexa</span>
+                </a>
+            </div>
+            <div class="nav-center">
+                <a href="/feed" class="nav-link" data-icon="🏠">Accueil</a>
+                <a href="/chat" class="nav-link" data-icon="💬">Messages<span id="unread-badge" class="badge hidden">0</span></a>
+                <a href="/groups" class="nav-link" data-icon="👥">Groupes</a>
+                <a href="/profile" class="nav-link" data-icon="👤">Profil</a>
+            </div>
+            <div class="nav-right">
+                <button id="notif-btn" class="icon-btn" title="Notifications">
+                    🔔<span id="notif-badge" class="badge hidden">0</span>
+                </button>
+                <button id="logout-btn" class="icon-btn" title="Déconnexion">🚪</button>
+            </div>
+        </nav>
+        {% endif %}
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <div id="toast-container"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+                  </html>
