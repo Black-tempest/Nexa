@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription — Nexa{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-logo">✨</div>
+            <h1>Créer un compte</h1>
+            <p>Rejoins Nexa en quelques secondes</p>
+        </div>
+
+        <form id="register-form" class="auth-form">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="ex: raijin"
+                    required
+                    minlength="3"
+                    maxlength="30"
+                    pattern="[A-Za-z0-9._-]+"
+                    autocomplete="username"
+                >
+                <small class="form-hint">3-30 caractères, lettres, chiffres, . _ -</small>
+            </div>
+
+            <div class="form-group">
+                <label for="display_name">Nom affiché</label>
+                <input
+                    type="text"
+                    id="display_name"
+                    name="display_name"
+                    placeholder="ex: Raijin Kaminari"
+                    maxlength="50"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="toi@email.com"
+                    required
+                    autocomplete="email"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Au moins 6 caractères"
+                    required
+                    minlength="6"
+                    autocomplete="new-password"
+                >
+            </div>
+
+            <div id="register-error" class="form-error hidden"></div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="register-submit">
+                Créer mon compte
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('register-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('register-submit');
+    const err = document.getElementById('register-error');
+
+    const username = document.getElementById('username').value.trim().toLowerCase();
+    const display_name = document.getElementById('display_name').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value;
+
+    err.classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = 'Création...';
+
+    try {
+        const res = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: username,
+                display_name: display_name,
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await res.json();
+
+        if (!data.ok) {
+            err.textContent = data.error || 'Erreur lors de l\'inscription';
+            err.classList.remove('hidden');
+            btn.disabled = false;
+            btn.textContent = 'Créer mon compte';
+            return;
+        }
+
+        localStorage.setItem('nexa_token', data.token);
+        localStorage.setItem('nexa_user', JSON.stringify(data.user));
+
+        showToast('Compte créé 🎉', 'success');
+        setTimeout(function () {
+            window.location.href = '/feed';
+        }, 500);
+    } catch (e) {
+        err.textContent = 'Erreur réseau';
+        err.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Créer mon compte';
+    }
+});
+</script>
+{% endblock %}
