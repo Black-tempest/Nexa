@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion — Nexa{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-logo">💬</div>
+            <h1>Connexion</h1>
+            <p>Ravi de te revoir sur Nexa</p>
+        </div>
+
+        <form id="login-form" class="auth-form">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur ou email</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="ex: raijin ou toi@email.com"
+                    required
+                    autocomplete="username"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="••••••••"
+                    required
+                    autocomplete="current-password"
+                >
+            </div>
+
+            <div id="login-error" class="form-error hidden"></div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="login-submit">
+                Se connecter
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Pas encore de compte ? <a href="/register">Créer un compte</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('login-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('login-submit');
+    const err = document.getElementById('login-error');
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    err.classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = 'Connexion...';
+
+    try {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: username, password: password })
+        });
+
+        const data = await res.json();
+
+        if (!data.ok) {
+            err.textContent = data.error || 'Erreur de connexion';
+            err.classList.remove('hidden');
+            btn.disabled = false;
+            btn.textContent = 'Se connecter';
+            return;
+        }
+
+        localStorage.setItem('nexa_token', data.token);
+        localStorage.setItem('nexa_user', JSON.stringify(data.user));
+
+        showToast('Connexion réussie ✨', 'success');
+        setTimeout(function () {
+            window.location.href = '/feed';
+        }, 500);
+    } catch (e) {
+        err.textContent = 'Erreur réseau';
+        err.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Se connecter';
+    }
+});
+</script>
+{% endblock %}
