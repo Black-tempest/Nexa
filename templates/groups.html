@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Groupes — Nexa{% endblock %}
+
+{% block content %}
+<div class="groups-layout">
+    <header class="groups-header">
+        <div class="groups-header-left">
+            <h1>Groupes</h1>
+            <p>Découvre, rejoins ou crée des groupes</p>
+        </div>
+        <button id="create-group-btn" class="btn btn-primary">➕ Créer un groupe</button>
+    </header>
+
+    <div class="groups-tabs">
+        <button class="tab-btn active" data-tab="all">Tous</button>
+        <button class="tab-btn" data-tab="mine">Mes groupes</button>
+        <input
+            type="text"
+            id="groups-search"
+            class="groups-search-input"
+            placeholder="Rechercher un groupe..."
+        >
+    </div>
+
+    <div id="groups-list" class="groups-grid">
+        <div class="loader">Chargement des groupes...</div>
+    </div>
+</div>
+
+<div id="create-group-modal" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Créer un groupe</h2>
+            <button class="modal-close" id="close-modal">✕</button>
+        </div>
+        <form id="create-group-form" class="modal-body">
+            <div class="form-group">
+                <label for="group-name">Nom du groupe</label>
+                <input
+                    type="text"
+                    id="group-name"
+                    placeholder="ex: Gaming France"
+                    required
+                    maxlength="60"
+                >
+            </div>
+            <div class="form-group">
+                <label for="group-description">Description</label>
+                <textarea
+                    id="group-description"
+                    placeholder="De quoi parle ce groupe ?"
+                    maxlength="500"
+                    rows="3"
+                ></textarea>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="group-private">
+                    Groupe privé (sur invitation)
+                </label>
+            </div>
+            <div id="create-group-error" class="form-error hidden"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="cancel-create">Annuler</button>
+                <button type="submit" class="btn btn-primary" id="submit-create">Créer</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/groups.js') }}"></script>
+{% endblock %}
