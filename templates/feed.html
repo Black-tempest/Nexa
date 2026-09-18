@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil — Nexa{% endblock %}
+
+{% block content %}
+<div class="feed-layout">
+    <aside class="feed-sidebar-left">
+        <div class="sidebar-card">
+            <div class="sidebar-user">
+                <img id="sidebar-avatar" class="avatar avatar-lg" src="" alt="">
+                <div>
+                    <div id="sidebar-name" class="sidebar-name">...</div>
+                    <div id="sidebar-username" class="sidebar-username">@...</div>
+                </div>
+            </div>
+            <div class="sidebar-stats">
+                <div>
+                    <strong id="sidebar-posts">0</strong>
+                    <span>Posts</span>
+                </div>
+                <div>
+                    <strong id="sidebar-followers">0</strong>
+                    <span>Abonnés</span>
+                </div>
+                <div>
+                    <strong id="sidebar-following">0</strong>
+                    <span>Abonnements</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="/feed" class="sidebar-link active">🏠 Accueil</a>
+            <a href="/chat" class="sidebar-link">💬 Messages</a>
+            <a href="/groups" class="sidebar-link">👥 Groupes</a>
+            <a href="/profile" class="sidebar-link">👤 Mon profil</a>
+        </nav>
+    </aside>
+
+    <main class="feed-main">
+        <div class="composer">
+            <div class="composer-header">
+                <img id="composer-avatar" class="avatar" src="" alt="">
+                <textarea
+                    id="post-content"
+                    class="composer-input"
+                    placeholder="Quoi de neuf ?"
+                    maxlength="5000"
+                    rows="3"
+                ></textarea>
+            </div>
+            <div class="composer-footer">
+                <span id="composer-count" class="char-count">0 / 5000</span>
+                <button id="post-btn" class="btn btn-primary">Publier</button>
+            </div>
+        </div>
+
+        <div id="feed-container" class="feed-container">
+            <div class="loader">Chargement des publications...</div>
+        </div>
+    </main>
+
+    <aside class="feed-sidebar-right">
+        <div class="sidebar-card">
+            <h3 class="sidebar-title">Suggestions</h3>
+            <div id="suggestions-list" class="suggestions-list">
+                <div class="loader-small">Chargement...</div>
+            </div>
+        </div>
+    </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/feed.js') }}"></script>
+{% endblock %}
