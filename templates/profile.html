@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Profil — Nexa{% endblock %}
+
+{% block content %}
+<div class="profile-layout">
+    <div class="profile-header">
+        <div class="profile-cover"></div>
+        <div class="profile-info">
+            <img id="profile-avatar" class="avatar avatar-xxl" src="" alt="">
+            <div class="profile-info-main">
+                <div class="profile-info-top">
+                    <div>
+                        <h1 id="profile-display-name" class="profile-name">...</h1>
+                        <p id="profile-username" class="profile-username">@...</p>
+                    </div>
+                    <div class="profile-actions" id="profile-actions">
+                        <button id="edit-profile-btn" class="btn btn-outline hidden">Modifier le profil</button>
+                        <button id="follow-btn" class="btn btn-primary hidden">Suivre</button>
+                        <button id="message-btn" class="btn btn-outline hidden">Message</button>
+                    </div>
+                </div>
+                <p id="profile-bio" class="profile-bio"></p>
+                <div class="profile-meta">
+                    <span>📅 Membre depuis <span id="profile-joined">...</span></span>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <strong id="stat-posts">0</strong>
+                        <span>Publications</span>
+                    </div>
+                    <div class="stat-item clickable" id="stat-followers">
+                        <strong id="stat-followers-count">0</strong>
+                        <span>Abonnés</span>
+                    </div>
+                    <div class="stat-item clickable" id="stat-following">
+                        <strong id="stat-following-count">0</strong>
+                        <span>Abonnements</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="posts">📝 Publications</button>
+        </div>
+        <div id="profile-posts" class="feed-container">
+            <div class="loader">Chargement des publications...</div>
+        </div>
+    </div>
+</div>
+
+<div id="edit-profile-modal" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Modifier le profil</h2>
+            <button class="modal-close" id="close-edit-modal">✕</button>
+        </div>
+        <form id="edit-profile-form" class="modal-body">
+            <div class="form-group">
+                <label for="edit-display-name">Nom affiché</label>
+                <input type="text" id="edit-display-name" maxlength="50">
+            </div>
+            <div class="form-group">
+                <label for="edit-bio">Bio</label>
+                <textarea id="edit-bio" maxlength="300" rows="3" placeholder="Parle un peu de toi..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit-avatar">URL de l'avatar</label>
+                <input type="text" id="edit-avatar" placeholder="https://..." maxlength="500">
+            </div>
+            <div class="form-group">
+                <label for="edit-password">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+                <input type="password" id="edit-password" minlength="6">
+            </div>
+            <div id="edit-profile-error" class="form-error hidden"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" id="cancel-edit">Annuler</button>
+                <button type="submit" class="btn btn-primary" id="submit-edit">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="followers-modal" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="followers-modal-title">Abonnés</h2>
+            <button class="modal-close" id="close-followers-modal">✕</button>
+        </div>
+        <div class="modal-body" id="followers-list">
+            <div class="loader-small">Chargement...</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}
