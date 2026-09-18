@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Nexa — Réseau social moderne{% endblock %}
+
+{% block content %}
+<div class="landing">
+    <div class="landing-hero">
+        <div class="hero-badge">✨ Nouveau réseau social</div>
+        <h1 class="hero-title">
+            Bienvenue sur <span class="gradient-text">Nexa</span>
+        </h1>
+        <p class="hero-subtitle">
+            Partage tes idées, discute avec tes amis, crée des groupes et reste connecté.
+            Le tout dans une interface moderne et rapide.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/register" class="btn btn-primary btn-lg">Créer un compte</a>
+            <a href="/login" class="btn btn-outline btn-lg">Se connecter</a>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">∞</div>
+                <div class="stat-label">Publications</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">💬</div>
+                <div class="stat-label">Messages</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">👥</div>
+                <div class="stat-label">Groupes</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">⚡</div>
+                <div class="stat-label">Temps réel</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="landing-features">
+        <h2 class="section-title">Tout ce dont tu as besoin</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Publications</h3>
+                <p>Partage tes pensées, photos et idées avec la communauté.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Messages privés</h3>
+                <p>Discute en temps réel avec tes amis, en toute simplicité.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Groupes</h3>
+                <p>Crée ou rejoins des groupes publics et privés.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Notifications</h3>
+                <p>Reste informé de tout ce qui se passe sur ton compte.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Temps réel</h3>
+                <p>Messages instantanés grâce à WebSocket.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Sécurisé</h3>
+                <p>Mots de passe chiffrés, sessions protégées.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="landing-cta">
+        <h2>Prêt à rejoindre Nexa ?</h2>
+        <p>Crée ton compte gratuitement en moins d'une minute.</p>
+        <a href="/register" class="btn btn-primary btn-lg">Commencer maintenant</a>
+    </div>
+
+    <footer class="landing-footer">
+        <p>© 2026 Nexa — Créé par <a href="https://github.com/Black-tempest" target="_blank">Raijin Kaminari</a></p>
+    </footer>
+</div>
+{% endblock %}
