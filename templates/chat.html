@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Messages — Nexa{% endblock %}
+
+{% block content %}
+<div class="chat-layout">
+    <aside class="chat-sidebar">
+        <div class="chat-sidebar-header">
+            <h2>Messages</h2>
+            <button id="new-chat-btn" class="icon-btn" title="Nouveau message">➕</button>
+        </div>
+
+        <div class="chat-search">
+            <input
+                type="text"
+                id="chat-search-input"
+                placeholder="Rechercher un utilisateur..."
+            >
+            <div id="chat-search-results" class="chat-search-results hidden"></div>
+        </div>
+
+        <div id="conversations-list" class="conversations-list">
+            <div class="loader-small">Chargement...</div>
+        </div>
+    </aside>
+
+    <main class="chat-main" id="chat-main">
+        <div class="chat-empty" id="chat-empty">
+            <div class="chat-empty-icon">💬</div>
+            <h2>Sélectionne une conversation</h2>
+            <p>Choisis un contact dans la liste ou recherche un utilisateur.</p>
+        </div>
+
+        <div class="chat-window hidden" id="chat-window">
+            <header class="chat-header">
+                <img id="chat-header-avatar" class="avatar" src="" alt="">
+                <div class="chat-header-info">
+                    <a id="chat-header-name" class="chat-header-name" href="#">...</a>
+                    <span id="chat-header-status" class="chat-header-status">en ligne</span>
+                </div>
+                <div class="chat-header-actions">
+                    <button class="icon-btn" title="Voir le profil" id="chat-view-profile">👤</button>
+                </div>
+            </header>
+
+            <div id="messages-container" class="messages-container">
+                <div class="loader-small">Chargement des messages...</div>
+            </div>
+
+            <div id="typing-indicator" class="typing-indicator hidden">
+                <span></span><span></span><span></span>
+            </div>
+
+            <form id="message-form" class="message-form">
+                <input
+                    type="text"
+                    id="message-input"
+                    placeholder="Écris un message..."
+                    autocomplete="off"
+                    maxlength="5000"
+                >
+                <button type="submit" class="btn btn-primary" id="send-btn">Envoyer</button>
+            </form>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
