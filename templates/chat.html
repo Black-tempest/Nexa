@@ -7,7 +7,6 @@
     <aside class="chat-sidebar">
         <div class="chat-sidebar-header">
             <h2>Messages</h2>
-            <button id="new-chat-btn" class="icon-btn" title="Nouveau message">➕</button>
         </div>
 
         <div class="chat-search">
@@ -38,9 +37,6 @@
                     <a id="chat-header-name" class="chat-header-name" href="#">...</a>
                     <span id="chat-header-status" class="chat-header-status">en ligne</span>
                 </div>
-                <div class="chat-header-actions">
-                    <button class="icon-btn" title="Voir le profil" id="chat-view-profile">👤</button>
-                </div>
             </header>
 
             <div id="messages-container" class="messages-container">
@@ -67,5 +63,6 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 {% endblock %}
