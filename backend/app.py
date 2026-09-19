@@ -3,13 +3,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from flask import Flask, render_template, jsonify, request, send_from_directory
+from flask import Flask, render_template, jsonify, request, session
 from flask_cors import CORS
 
 from utils import log
 import database
 
-from auth import auth
+from auth import auth, get_current_user
 from chat import chat
 from posts import posts
 from groups import groups_bp
@@ -42,6 +42,18 @@ app.register_blueprint(groups_bp)
 app.register_blueprint(profile)
 
 
+def session_user():
+    try:
+        return get_current_user()
+    except Exception:
+        return None
+
+
+@app.context_processor
+def inject_session_user():
+    return {"session_user": session_user()}
+
+
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
@@ -72,8 +84,18 @@ def page_groups():
     return render_template("groups.html")
 
 
+@app.route("/groups/<int:group_id>", methods=["GET"])
+def page_group_detail(group_id):
+    return render_template("groups.html")
+
+
 @app.route("/profile", methods=["GET"])
 def page_profile():
+    return render_template("profile.html")
+
+
+@app.route("/profile/<username>", methods=["GET"])
+def page_profile_user(username):
     return render_template("profile.html")
 
 
@@ -93,7 +115,7 @@ def not_found(e):
 def server_error(e):
     if request.path.startswith("/api/"):
         return jsonify({"ok": False, "error": "Server error"}), 500
-    return jsonify({"ok": False, "error": "Server error"}), 500
+    return render_template("404.html"), 500
 
 
 def main():
